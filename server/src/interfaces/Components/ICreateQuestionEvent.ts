@@ -26,7 +26,7 @@ export type ICreateQuestionEvent =
       payload: IComprehension;
     };
 
-const createQuestion = <Type extends ICreateQuestionEvent['type']>(
+export const createQuestionTypeHelper = <Type extends ICreateQuestionEvent['type']>(
   ...args: Extract<ICreateQuestionEvent, { type: Type }> extends { payload: infer categories }
     ? [type: Type, payload: categories]
     : Extract<ICreateQuestionEvent, { type: Type }> extends { payload: infer mcq }
@@ -36,13 +36,8 @@ const createQuestion = <Type extends ICreateQuestionEvent['type']>(
     : Extract<ICreateQuestionEvent, { type: Type }> extends { payload: infer comprehension }
     ? [type: Type, payload: comprehension]
     : never
-) => {};
-
-createQuestion(ComponentTypes.CATEGORIZE, {
-  question: 'Dsalkdjsa',
-  categories: ['hello'],
-  correctAnswers: { Yolo: 'hello' },
-});
-createQuestion(ComponentTypes.MCQ, { question: 'ADKSjasl', correctIndex: 0, options: ['Hello', 'kdljsada'] });
-createQuestion(ComponentTypes.BOOLEAN, { isCorrectAnswer: false, question: 'dsadklsaj' });
-createQuestion(ComponentTypes.ESSAY, { question: 'dasdSKl' });
+) => {
+  const type = args[0];
+  const payload = args[1];
+  return { type, payload };
+};

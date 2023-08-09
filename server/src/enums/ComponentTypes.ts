@@ -4,5 +4,6 @@ export enum ComponentTypes {
   'SHORT_ANSWER' = 'SHORT_ANSWER',
   'BOOLEAN' = 'BOOLEAN',
   'ESSAY' = 'ESSAY',
-//   'IMAGE' = 'IMAGE',
+  // 'IMAGE' = 'IMAGE',
+// todo Date
 }

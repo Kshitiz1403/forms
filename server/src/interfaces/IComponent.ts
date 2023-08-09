@@ -1,7 +1,8 @@
+import { ObjectId } from 'mongoose';
 import { Component } from './Components';
 
 export type IComponent = {
-  id: string;
-  mediaURL?: string;
+  _id: ObjectId;
+  imageURL?: string;
   type: Component;
 };

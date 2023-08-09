@@ -34,7 +34,7 @@ export default ({ app }: { app: express.Application }) => {
   // Transforms the raw string of req.body into json
   app.use(express.json());
   // Load API routes
-  app.use(routes());
+  app.use(config.api.prefix, routes());
 
   /// catch 404 and forward to error handler
   app.use((req, res, next) => {
@@ -48,8 +48,8 @@ export default ({ app }: { app: express.Application }) => {
     /**
      * Handles authorization errors
      */
+    LoggerInstance.error('🔥 error: %o', err);
     if (err.status === 401) {
-      LoggerInstance.error('🔥 error: %o', err);
       return res.status(err.status).json(Result.error(err));
     }
     return next(err);

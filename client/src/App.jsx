@@ -1,11 +1,13 @@
-import Question from './Components/Question'
+import { Provider } from 'react-redux'
+import AppRoutes from './Pages/Routes'
+import store from './store'
 
 function App() {
   return (
     <>
-      <div style={{ minHeight: '100vh', justifyContent: 'center', display: 'flex', alignItems:'center'}}>
-        <Question />
-      </div>
+      <Provider store={store}>
+        <AppRoutes />
+      </Provider>
     </>
   )
 }

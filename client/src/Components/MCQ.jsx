@@ -1,64 +1,36 @@
-import React, { useReducer } from "react";
+import React from "react";
 import { Button, IconButton, Radio, TextField } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useDispatch, useSelector } from "react-redux";
+import { ADD_OPTION, EDIT_OPTION, REMOVE_OPTION, SELECT_CORRECT_OPTION } from "../store/reducers/mcqSlice";
 
 
 const Option = ({ index, dispatch, state }) => {
   return <div style={{ display: 'flex', marginTop: 10 }} key={index}>
     <Radio checked={state.correctIndex == index} onChange={(e) => {
       const checked = e.target.checked;
-      checked && dispatch({ type: "SELECT_CORRECT_OPTION", payload: index })
+      checked && dispatch(SELECT_CORRECT_OPTION(index))
     }} />
     <TextField label={`Option ${index + 1}`} value={state.options[index]} onChange={e => {
       const value = e.target.value;
-      dispatch({ type: "EDIT_OPTION", payload: { index, content: value } })
+      dispatch(EDIT_OPTION({ index, content: value }))
     }} />
-    <IconButton onClick={() => dispatch({ type: "REMOVE_OPTION", payload: index })}>
+    <IconButton onClick={() => dispatch(REMOVE_OPTION(index))}>
       <DeleteIcon />
     </IconButton>
   </div>
 }
 
 const MCQ = () => {
-  function reducer(state, action) {
-    switch (action.type) {
-      case "ADD_OPTION": {
-        const options = [...state.options, ""];
-        return { ...state, options };
-      }
-      case "EDIT_OPTION": {
-        const { index, content } = action.payload;
-        const options = [...state.options];
-        options[index] = content
 
-        return { ...state, options }
-      }
-      case "REMOVE_OPTION": {
-        const index = action.payload;
-        const options = [...state.options];
-        options.splice(index, 1);
-
-        if (state.correctIndex == index) {
-          return { ...state, correctIndex: null, options };
-        }
-        return { ...state, options };
-      }
-      case "SELECT_CORRECT_OPTION": {
-        const index = action.payload;
-        return { ...state, correctIndex: index };
-      }
-    }
-  }
-
-  const [state, dispatch] = useReducer(reducer, {
-    options: [],
-    correctIndex: null,
-  });
+  const state = useSelector(state => state.mcq)
+  const options = useSelector(state => state.mcq.options)
+  const dispatch = useDispatch();
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
-      {state.options.map((e, index) => <Option key={index} index={index} dispatch={dispatch} state={state} />)}
-      <Button style={{ alignSelf: 'center', width: 'fit-content' }} variant="outlined" onClick={() => dispatch({ type: "ADD_OPTION" })}>Add Option</Button>
+      {options.map((e, index) => <Option key={index} index={index} dispatch={dispatch} state={state} />)}
+      <Button style={{ alignSelf: 'center', width: 'fit-content' }} variant="outlined" onClick={() => dispatch(ADD_OPTION())}>Add Option</Button>
     </div>
   );
 };

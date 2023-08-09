@@ -1,33 +1,35 @@
-import React, { useReducer } from 'react'
+import React from 'react'
 import { IconButton, TextField, Button, MenuItem, Select } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { ADD_CATEGORY, ADD_ITEM, EDIT_CATEGORY, EDIT_ITEM, MAP_BELONGING, REMOVE_CATEGORY, REMOVE_ITEM } from '../store/reducers/categorizeSlice';
 
 const Category = ({ index, dispatch, state }) => {
     return <div style={{ display: 'flex', marginTop: 10 }} key={index}>
         <TextField label={`Category ${index + 1}`} value={state.categories[index]} onChange={e => {
             const value = e.target.value;
-            dispatch({ type: "EDIT_CATEGORY", payload: { index, content: value } })
+            dispatch(EDIT_CATEGORY({ index, content: value }))
         }} />
-        <IconButton onClick={() => dispatch({ type: "REMOVE_CATEGORY", payload: index })}>
+
+        <IconButton onClick={() => dispatch(REMOVE_CATEGORY(index))}>
             <DeleteIcon />
         </IconButton>
-    </div>
+    </div >
 }
 
 const Item = ({ index, dispatch, state }) => {
     const handleMappingChange = (event) => {
         const category = event.target.value;
-        dispatch({ type: "MAP_BELONGING", payload: { index, category } })
+        dispatch(MAP_BELONGING({ index, category }))
     }
 
     return <div style={{ display: 'flex', marginTop: 10, justifyContent: 'space-between' }}>
         <div style={{ display: 'flex' }}>
             <TextField label={`Item ${index + 1}`} value={state.items[index].item} onChange={e => {
                 const value = e.target.value;
-                dispatch({ type: "EDIT_ITEM", payload: { index, content: value } })
+                dispatch(EDIT_ITEM({ index, content: value }))
             }} />
-            <IconButton onClick={() => dispatch({ type: "REMOVE_ITEM", payload: index })}>
+            <IconButton onClick={() => dispatch(REMOVE_ITEM(index))}>
                 <DeleteIcon />
             </IconButton>
         </div>
@@ -49,78 +51,25 @@ const Item = ({ index, dispatch, state }) => {
 }
 
 const Categorize = () => {
-    function reducer(state, action) {
-        switch (action.type) {
-            case "ADD_CATEGORY": {
-                const categories = [...state.categories, ""];
-                return { ...state, categories }
-            }
-            case "REMOVE_CATEGORY": {
-                const index = action.payload;
-                const categories = [...state.categories];
-                categories.splice(index, 1)
-                return { ...state, categories }
-            }
-            case "EDIT_CATEGORY": {
-                const { index, content } = action.payload;
-                const categories = [...state.categories];
-                categories[index] = content
-                return { ...state, categories }
-            }
-            case "ADD_ITEM": {
-                const item = { item: "", belongsTo: "" }
-                const items = [...state.items, item];
-
-                return { ...state, items }
-            }
-            case "EDIT_ITEM": {
-                const { content, index } = action.payload
-                const items = structuredClone(state.items);
-
-                const mapping = items[index]
-                mapping.item = content;
-                items[index] = mapping
-
-                return { ...state, items }
-            }
-            case "REMOVE_ITEM": {
-                const index = action.payload
-                const items = [...state.items];
-                items.splice(index, 1)
-                return { ...state, items }
-            }
-            case "MAP_BELONGING": {
-                const { index, category } = action.payload
-                const items = structuredClone(state.items);
-                const mapping = items[index];
-                mapping.belongsTo = category
-
-                return { ...state, items }
-            }
-        }
-    }
-
-    const [state, dispatch] = useReducer(reducer, {
-        categories: [],
-        items: []
-    })
+    const state = useSelector(state => state.categorize);
+    const dispatch = useDispatch();
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <div>Categories</div>
-            {state.categories.map((el, index) => <Category dispatch={dispatch} index={index} state={state} key={index} />)}
-            <Button style={{width:'fit-content', alignSelf:'center'}} variant="outlined" onClick={() => dispatch({ type: "ADD_CATEGORY" })}>Add Category</Button>
-            <div style={{ marginRight: 25 }}>
+            <div>
+                <div>Categories</div>
+                {state.categories.map((el, index) => <Category dispatch={dispatch} index={index} state={state} key={index} />)}
+                <Button style={{ width: 'fit-content', marginTop: 10 }} variant="outlined" onClick={() => dispatch(ADD_CATEGORY())}>Add Category</Button>
+            </div>
 
+            <div style={{ marginRight: 25, marginTop: 20 }}>
                 <div style={{ justifyContent: 'space-between', display: 'flex' }}>
                     <div>Items</div>
                     <div>Belongs To</div>
                 </div>
                 {state.items.map((el, index) => <Item index={index} dispatch={dispatch} state={state} key={index} />)}
+                <Button style={{ width: 'fit-content', marginTop: 10 }} variant="outlined" onClick={() => dispatch(ADD_ITEM())}>Add Item</Button>
             </div>
-
-            <Button style={{width:'fit-content', alignSelf:'center'}} variant="outlined" onClick={() => dispatch({ type: "ADD_ITEM" })}>Add Item</Button>
-
         </div>
     )
 }

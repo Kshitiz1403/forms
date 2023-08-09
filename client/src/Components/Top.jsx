@@ -46,16 +46,14 @@ const Top = () => {
                 defaultValue={state.questionType}
                 onChange={handleChange}
             >
-                {Object.keys(ComponentTypes).map(key => {
-                    const value = ComponentTypes[key]
-                    return <MenuItem key={value} value={value}>{value}</MenuItem>
-                })}
+                {Object.values(ComponentTypes).map(value => <MenuItem key={value} value={value}>{value}</MenuItem>)}
+
             </Select>
         </div>
         <div>
             <TextField style={{ width: '100%' }} id="outlined-basic" label="Question" value={state.question} onChange={(event) => dispatch({ type: "UPDATE_QUESTION", payload: event.target.value })} variant="outlined" />
         </div>
-        {state.questionType == ComponentTypes.MCQ ? <MCQ /> : ComponentTypes.CATEGORIZE ? <Categorize/> : null}
+        {state.questionType == ComponentTypes.MCQ ? <MCQ /> : state.questionType == ComponentTypes.CATEGORIZE ? <Categorize /> : null}
     </>
 }
 

@@ -2,6 +2,7 @@ import { MenuItem, Select, TextField } from "@mui/material"
 import { ComponentTypes } from "../enums/ComponentTypes"
 import { useReducer, useState } from "react"
 import MCQ from "./MCQ"
+import Categorize from "./Categorize"
 
 const Top = () => {
 
@@ -39,8 +40,7 @@ const Top = () => {
             }}
         >
             <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
+                labelId="Choose Question Type"
                 value={state.questionType}
                 label="Question Type"
                 defaultValue={state.questionType}
@@ -55,7 +55,7 @@ const Top = () => {
         <div>
             <TextField style={{ width: '100%' }} id="outlined-basic" label="Question" value={state.question} onChange={(event) => dispatch({ type: "UPDATE_QUESTION", payload: event.target.value })} variant="outlined" />
         </div>
-        {state.questionType == ComponentTypes.MCQ ? <MCQ /> : null}
+        {state.questionType == ComponentTypes.MCQ ? <MCQ /> : ComponentTypes.CATEGORIZE ? <Categorize/> : null}
     </>
 }
 

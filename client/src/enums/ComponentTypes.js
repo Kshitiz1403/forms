@@ -1,9 +1,9 @@
 export const ComponentTypes = {
-  CATEGORIZE: "CATEGORIZE",
+  CATEGORIZE: "Categorize",
   MCQ: "MCQ",
-  SHORT_ANSWER: "SHORT_ANSWER",
-  BOOLEAN: "BOOLEAN",
-  ESSAY: "ESSAY",
-  // 'IMAGE' = 'IMAGE',
+  SHORT_ANSWER: "Short Answer",
+  ESSAY: "Essay",
+//   BOOLEAN: "Boolean",
+  // 'IMAGE' = 'Image',
   // todo Date
 };

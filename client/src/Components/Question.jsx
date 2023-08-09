@@ -4,7 +4,7 @@ import { useReducer, useState } from "react"
 import MCQ from "./MCQ"
 import Categorize from "./Categorize"
 
-const Top = () => {
+const Question = () => {
 
     const handleChange = (event) => {
         const value = event.target.value;
@@ -30,7 +30,7 @@ const Top = () => {
         question: ""
     })
 
-    return <>
+    return <div style={{ width: '50%', height: '100%', borderWidth: 0.1, borderColor: 'rgba(0, 0, 0, 0.125)', borderStyle: 'solid', borderRadius: 10, padding: 20, boxShadow: 10, minHeight: '50vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly', }}>
         <div
             style={{
                 display: "flex",
@@ -50,11 +50,11 @@ const Top = () => {
 
             </Select>
         </div>
-        <div>
+        <div style={{ marginTop: 10, marginBottom: 10 }}>
             <TextField style={{ width: '100%' }} id="outlined-basic" label="Question" value={state.question} onChange={(event) => dispatch({ type: "UPDATE_QUESTION", payload: event.target.value })} variant="outlined" />
         </div>
         {state.questionType == ComponentTypes.MCQ ? <MCQ /> : state.questionType == ComponentTypes.CATEGORIZE ? <Categorize /> : null}
-    </>
+    </div>
 }
 
-export default Top
+export default Question

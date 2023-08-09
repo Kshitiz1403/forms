@@ -1,11 +1,12 @@
-import Top from './Components/Top'
+import Question from './Components/Question'
 
 function App() {
-
   return (
     <>
-     <Top/>
-     </>
+      <div style={{ minHeight: '100vh', justifyContent: 'center', display: 'flex', alignItems:'center'}}>
+        <Question />
+      </div>
+    </>
   )
 }
 

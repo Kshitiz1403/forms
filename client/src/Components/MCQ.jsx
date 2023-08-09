@@ -58,7 +58,7 @@ const MCQ = () => {
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       {state.options.map((e, index) => <Option key={index} index={index} dispatch={dispatch} state={state} />)}
-      <Button variant="text" onClick={() => dispatch({ type: "ADD_OPTION" })}>Add Option</Button>
+      <Button style={{ alignSelf: 'center', width: 'fit-content' }} variant="outlined" onClick={() => dispatch({ type: "ADD_OPTION" })}>Add Option</Button>
     </div>
   );
 };

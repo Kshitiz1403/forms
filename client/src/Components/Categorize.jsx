@@ -109,14 +109,17 @@ const Categorize = () => {
         <div style={{ display: 'flex', flexDirection: 'column' }}>
             <div>Categories</div>
             {state.categories.map((el, index) => <Category dispatch={dispatch} index={index} state={state} key={index} />)}
-            <Button variant="text" onClick={() => dispatch({ type: "ADD_CATEGORY" })}>Add Category</Button>
+            <Button style={{width:'fit-content', alignSelf:'center'}} variant="outlined" onClick={() => dispatch({ type: "ADD_CATEGORY" })}>Add Category</Button>
+            <div style={{ marginRight: 25 }}>
 
-            <div style={{ justifyContent: 'space-between', display: 'flex' }}>
-                <div>Items</div>
-                <div>Belongs To</div>
+                <div style={{ justifyContent: 'space-between', display: 'flex' }}>
+                    <div>Items</div>
+                    <div>Belongs To</div>
+                </div>
+                {state.items.map((el, index) => <Item index={index} dispatch={dispatch} state={state} key={index} />)}
             </div>
-            {state.items.map((el, index) => <Item index={index} dispatch={dispatch} state={state} key={index} />)}
-            <Button variant="text" onClick={() => dispatch({ type: "ADD_ITEM" })}>Add Item</Button>
+
+            <Button style={{width:'fit-content', alignSelf:'center'}} variant="outlined" onClick={() => dispatch({ type: "ADD_ITEM" })}>Add Item</Button>
 
         </div>
     )

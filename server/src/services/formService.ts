@@ -2,7 +2,7 @@ import { ComponentTypes } from '@/enums/ComponentTypes';
 import { ICategories } from '@/interfaces/Components/ICategorize';
 import { createQuestionTypeHelper } from '@/interfaces/Components/ICreateQuestionEvent';
 import { IMcq } from '@/interfaces/Components/IMcq';
-import { IForm, IFormInputDTO } from '@/interfaces/IForm';
+import { IForm } from '@/interfaces/IForm';
 import { FormRepository } from '@/repositories/formRepository';
 import { Service } from 'typedi';
 
@@ -17,6 +17,27 @@ export class FormService {
     try {
       const formRecord = await this.formRepositoryInstance.getFormById(formId);
       const form = { ...formRecord };
+
+      const components = form.components.map(component => {
+        switch (component.type) {
+          case ComponentTypes.CATEGORIZE: {
+            const { categories, question, type, _id, correctAnswers } = component;
+            const items = Object.keys(correctAnswers);
+            return { _id, type, categories, question, items };
+          }
+          case ComponentTypes.MCQ: {
+            const { question, _id, options, type } = component;
+            return { _id, type, question, options };
+          }
+          case ComponentTypes.BOOLEAN:
+          case ComponentTypes.ESSAY:
+          case ComponentTypes.SHORT_ANSWER:
+            const { question, _id, type } = component;
+            return { _id, type, question };
+        }
+      });
+
+      form.components = components;
       form.createdAt = undefined;
       form.updatedAt = undefined;
       form.__v = undefined;

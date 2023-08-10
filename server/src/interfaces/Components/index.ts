@@ -1,6 +1,8 @@
-import { IBoolean } from './IBoolean';
-import { ICategories } from './ICategorize';
-import { IComprehension } from './IComprehension';
-import { IMcq } from './IMcq';
+import { ComponentTypes } from '@/enums/ComponentTypes';
 
-export type Component = IBoolean | ICategories | IComprehension | IMcq;
+export type Component =
+  | ComponentTypes.BOOLEAN
+  | ComponentTypes.CATEGORIZE
+  | ComponentTypes.ESSAY
+  | ComponentTypes.MCQ
+  | ComponentTypes.SHORT_ANSWER;

@@ -38,6 +38,7 @@ export const categorizeSlice = createSlice({
       const { index, category } = action.payload;
       state.items[index].belongsTo = category;
     },
+    RESET: () => INITIAL_STATE,
   },
 });
 
@@ -50,4 +51,5 @@ export const {
   REMOVE_CATEGORY,
   REMOVE_ITEM,
 } = categorizeSlice.actions;
+export const categorizeActions = categorizeSlice.actions;
 export default categorizeSlice.reducer;

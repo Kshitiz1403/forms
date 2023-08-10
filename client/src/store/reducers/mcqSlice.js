@@ -26,9 +26,11 @@ export const mcqSlice = createSlice({
       const index = action.payload;
       state.correctIndex = index;
     },
+    RESET: () => INITIAL_STATE,
   },
 });
 
 export const { ADD_OPTION, EDIT_OPTION, REMOVE_OPTION, SELECT_CORRECT_OPTION } =
   mcqSlice.actions;
+export const mcqActions = mcqSlice.actions;
 export default mcqSlice.reducer;

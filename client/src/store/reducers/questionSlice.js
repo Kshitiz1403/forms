@@ -18,8 +18,10 @@ export const questionSlice = createSlice({
       const question = action.payload;
       state.question = question;
     },
+    RESET: () => INITIAL_STATE,
   },
 });
 
 export const { SWITCH_TYPE, UPDATE_QUESTION } = questionSlice.actions;
+export const questionActions = questionSlice.actions;
 export default questionSlice.reducer;

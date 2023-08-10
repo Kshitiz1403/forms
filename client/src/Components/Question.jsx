@@ -4,8 +4,11 @@ import MCQ from "./MCQ"
 import Categorize from "./Categorize"
 import { useDispatch, useSelector } from "react-redux"
 import { SWITCH_TYPE, UPDATE_QUESTION } from "../store/reducers/questionSlice"
+import useQuestion from "../hooks/useQuestion"
 
 const Question = () => {
+
+    const questionService = useQuestion();
 
     const handleChange = (event) => {
         const value = event.target.value;
@@ -46,7 +49,9 @@ const Question = () => {
                 </div>
                 {state.questionType == ComponentTypes.MCQ ? <MCQ /> : state.questionType == ComponentTypes.CATEGORIZE ? <Categorize /> : null}
             </div>
-            <Button style={{}} variant="outlined">Add Question</Button>
+            <div style={{ justifyContent: 'center', display: 'flex' }}>
+                <Button variant="contained" onClick={() => questionService.addQuestion()}>Add Question</Button>
+            </div>
         </div>)
 }
 

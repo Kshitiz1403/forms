@@ -9,19 +9,16 @@ export const formSlice = createSlice({
   name: "form",
   initialState: INITIAL_STATE,
   reducers: {
-    createForm: (state, action) => {
+    CREATE_FORM: (state, action) => {
       const { formId } = action.payload;
       state.formId = formId;
     },
-    addCategory:() =>{
-      
-    },
-    addComponent: (state, action) => {
-      const {} = action.payload;
-
+    ADD_COMPONENT: (state, action) => {
+      const component = action.payload;
+      state.components.push(component);
     },
   },
 });
 
-export const { createForm } = formSlice.actions;
+export const { CREATE_FORM, ADD_COMPONENT } = formSlice.actions;
 export default formSlice.reducer;

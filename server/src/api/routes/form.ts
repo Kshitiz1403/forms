@@ -9,6 +9,8 @@ export default (app: Router) => {
 
   app.use('/forms', route);
 
+  route.get('/:formId', ctrl.getForm);
+
   route.post('/', ctrl.createForm);
 
   route.post('/question/:formId', ctrl.addQuestion);

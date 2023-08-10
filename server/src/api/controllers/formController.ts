@@ -14,6 +14,17 @@ export class FormController {
     this.logger = logger;
     this.formServiceInstance = formService;
   }
+  public getForm = async (req: Request, res: Response, next: NextFunction) => {
+    this.logger.debug('Calling Get Form endpoint with %o', { params: req.params });
+
+    try {
+      const formId = req.params['formId'];
+      const form = await this.formServiceInstance.getForm(formId);
+      return res.status(200).json(Result.success(form));
+    } catch (error) {
+      return next(error);
+    }
+  };
   public createForm = async (req: Request, res: Response, next: NextFunction) => {
     this.logger.debug('Calling Create Form endpoint with %o', { body: req.body, params: req.params });
 
@@ -43,8 +54,8 @@ export class FormController {
     try {
       const formId = req.params['formId'];
 
-      await this.formServiceInstance.publishForm(formId);
-      return res.status(200).json(Result.success());
+      const form = await this.formServiceInstance.publishForm(formId);
+      return res.status(200).json(Result.success(form));
     } catch (error) {
       return next(error);
     }

@@ -4,14 +4,12 @@ import { Service } from 'typedi';
 
 @Service()
 export class FormRepository {
-  public createForm = async (): Promise<IForm> => {
-    try {
-      const form = await FormModel.create({});
-      if (form) return form.toObject();
-      return null;
-    } catch (error) {
-      throw error;
-    }
+  public getFormById = async (formId: IForm['_id']) => {
+    return (await FormModel.findById(formId)).toObject();
+  };
+
+  public createForm = async () => {
+    return (await FormModel.create({})).toObject();
   };
 
   public createQuestion = async (formId: IForm['_id'], { payload, type }) => {

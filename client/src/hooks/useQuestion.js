@@ -4,15 +4,18 @@ import { categorizeActions } from "../store/reducers/categorizeSlice";
 import { mcqActions } from "../store/reducers/mcqSlice";
 import { questionActions } from "../store/reducers/questionSlice";
 import { ADD_COMPONENT } from "../store/reducers/formSlice";
+import { SHOW_SNACKBAR } from "../store/reducers/snackbarSlice";
+import config from "../config";
 
 const useQuestion = () => {
   const questionState = useSelector((state) => state.question);
   const mcqState = useSelector((state) => state.mcq);
   const categorizeState = useSelector((state) => state.categorize);
+  const formId = useSelector((state) => state.form.formId);
 
   const dispatch = useDispatch();
 
-  const addQuestion = () => {
+  const addQuestion = async () => {
     const { questionType, question } = questionState;
     const component = {
       type: questionType,
@@ -26,6 +29,7 @@ const useQuestion = () => {
         items.map(({ item, belongsTo }) => {
           correctAnswers[item] = belongsTo;
         });
+        component["correctAnswers"] = correctAnswers;
         break;
       }
       case ComponentTypes.MCQ: {
@@ -36,7 +40,29 @@ const useQuestion = () => {
       }
     }
 
+    const response = await fetch(
+      `${config.BASE_URI}/forms/question/${formId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...component,
+        }),
+      }
+    );
+    const data = (await response.json()).data;
+
     dispatch(ADD_COMPONENT(component));
+
+    dispatch(
+      SHOW_SNACKBAR({
+        severity: "success",
+        message: "Question Added",
+        autoHideDuration: 2000,
+      })
+    );
 
     dispatch(categorizeActions.RESET());
     dispatch(mcqActions.RESET());

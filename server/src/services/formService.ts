@@ -13,12 +13,26 @@ export class FormService {
     this.formRepositoryInstance = formRepository;
   }
 
+  public getForm = async (formId: IForm['_id']) => {
+    try {
+      const formRecord = await this.formRepositoryInstance.getFormById(formId);
+      const form = { ...formRecord };
+      form.createdAt = undefined;
+      form.updatedAt = undefined;
+      form.__v = undefined;
+      return form;
+    } catch (error) {
+      throw error;
+    }
+  };
+
   public createForm = async () => {
     try {
       const formRecord = await this.formRepositoryInstance.createForm();
       const form = { ...formRecord };
       form.createdAt = undefined;
       form.updatedAt = undefined;
+      form.__v = undefined;
       return form;
     } catch (error) {
       throw error;
@@ -71,6 +85,10 @@ export class FormService {
   };
 
   public publishForm = async (formId: IForm['_id']) => {
-    await this.formRepositoryInstance.publishForm(formId);
+    const formRecord = await this.formRepositoryInstance.publishForm(formId);
+    const form = { ...formRecord };
+    form.createdAt = undefined;
+    form.updatedAt = undefined;
+    return form;
   };
 }

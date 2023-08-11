@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer, useState } from 'react'
-import { Button, Radio, TextField } from '@mui/material';
+import { Button, Radio, TextField, Tooltip } from '@mui/material';
 import { MovableComponent } from './MovableComponent';
 import { ComponentTypes } from '../enums/ComponentTypes';
 import { useDispatch } from 'react-redux';
@@ -69,7 +69,11 @@ const Respond = ({ type, onNext, onPrevious, questionId, question, categoriesPay
                 }
             </div>
 
-            <Button variant='contained' onClick={onNext}>{nextButton}</Button>
+            <Tooltip title={nextButton.isDisabled && "Can't submit while previewing the form."}>
+                <span>
+                    <Button variant='contained' onClick={onNext} disabled={nextButton.isDisabled} >{nextButton.text}</Button>
+                </span>
+            </Tooltip>
 
         </div>
     )

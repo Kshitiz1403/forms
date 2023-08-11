@@ -13,7 +13,7 @@ export class FormService {
     this.formRepositoryInstance = formRepository;
   }
 
-  public getForm = async (formId: IForm['_id']) => {
+  public previewForm = async (formId: IForm['_id']) => {
     try {
       const formRecord = await this.formRepositoryInstance.getFormById(formId);
       const form = { ...formRecord };
@@ -45,6 +45,12 @@ export class FormService {
     } catch (error) {
       throw error;
     }
+  };
+  
+  public getForm = async (formId: IForm['_id']) => {
+    const form = await this.previewForm(formId);
+    if (!form.isLive) throw 'The form is not live yet.';
+    return form;
   };
 
   public createForm = async () => {
@@ -120,5 +126,4 @@ export class FormService {
     form.updatedAt = undefined;
     return form;
   };
-
 }

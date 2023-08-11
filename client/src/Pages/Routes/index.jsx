@@ -9,8 +9,9 @@ const AppRoutes = () => {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/form/:id" element ={<Form/>}/>
-                <Route path="/form/:id/preview" element ={<Preview/>}/>
+                <Route path="/form/:id" element={<Form />} />
+                <Route path="/form/:id/preview" element={<Preview isSubmit={false} />} />
+                <Route path="/form/:id/submit" element={<Preview isSubmit={true} />} />
                 <Route path='/form/:id/question' element={<>
                     <div style={{ minHeight: '100vh', justifyContent: 'center', display: 'flex', alignItems: 'center' }}>
                         <Question />

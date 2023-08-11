@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import MCQ from '../../Components/MCQ'
-import Question from '../Question'
 import useForm from '../../hooks/useForm'
 import { useParams } from 'react-router-dom'
 import Respond from '../../Components/Respond'
@@ -10,7 +8,7 @@ import { ComponentTypes } from '../../enums/ComponentTypes'
 import useRespond from '../../hooks/useRespond'
 import store from '../../store'
 
-const Preview = () => {
+const Preview = ({ isSubmit }) => {
 
     const formService = useForm();
     const respondService = useRespond();
@@ -20,21 +18,28 @@ const Preview = () => {
     const answeringIndex = useSelector(state => state.respond.answeringIndex)
     const componentsLength = components.length;
 
-    const [nextButtonText, setNextButtonText] = useState("Next")
+    const [nextButton, setNextButton] = useState({ text: "Next", isDisabled: false })
 
 
     useEffect(() => {
         (async () => {
             const formId = params.id;
-            const form = await formService.getForm(formId);
+
+            if (isSubmit) {
+                const form = await formService.getForm(formId)
+            } else {
+                const form = await formService.previewForm(formId)
+            }
         })();
     }, [])
 
     useEffect(() => {
         if (components && Array.isArray(components) && answeringIndex == components.length - 1) {
-            return setNextButtonText("Submit")
+            if (isSubmit) return setNextButton({ text: "Submit", isDisabled: false })
+            return setNextButton({ text: "Submit", isDisabled: true })
+
         }
-        return setNextButtonText("Next")
+        return setNextButton({ text: "Next", isDisabled: false })
 
     }, [answeringIndex])
 
@@ -64,6 +69,7 @@ const Preview = () => {
     }
 
     const submit = (currentType) => {
+        // if (!isSubmit)
         const newResponses = [...store.getState().respond.responses];
         switch (currentType) {
             case ComponentTypes.CATEGORIZE:
@@ -83,7 +89,7 @@ const Preview = () => {
     }
 
     const CurrentRespondingComponent = () => {
-        if (!components || components.length == 0) return<></>
+        if (!components || components.length == 0) return <></>
         const component = components[answeringIndex]
         const type = component.type
         const questionId = component._id;
@@ -103,7 +109,7 @@ const Preview = () => {
             const options = component.options
             mcqPayload['options'] = options
         }
-        return <Respond type={type} onNext={onNext} onPrevious={onPrevious} questionId={questionId} question={component.question} categoriesPayload={categoriesPayload} mcqPayload={mcqPayload} nextButton={nextButtonText} />
+        return <Respond type={type} onNext={onNext} onPrevious={onPrevious} questionId={questionId} question={component.question} categoriesPayload={categoriesPayload} mcqPayload={mcqPayload} nextButton={nextButton} />
     }
 
     return (

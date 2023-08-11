@@ -12,13 +12,40 @@ const useForm = () => {
   const getForm = async (formId) => {
     try {
       const response = await fetch(`${config.BASE_URI}/forms/${formId}`);
-      if (!response.ok)throw response
+      if (!response.ok) throw await response.json();
       const data = (await response.json()).data;
       const { components, isLive, _id } = data;
       dispatch(LOAD_FORM({ components, isLive, formId: _id }));
       return data;
     } catch (error) {
+      dispatch(
+        SHOW_SNACKBAR({
+          severity: "error",
+          message: error.data.toString(),
+          autoHideDuration: 2000,
+        })
+      );
+    }
+  };
 
+  const previewForm = async (formId) => {
+    try {
+      const response = await fetch(
+        `${config.BASE_URI}/forms/${formId}/preview`
+      );
+      if (!response.ok) throw await response.json();
+      const data = (await response.json()).data;
+      const { components, isLive, _id } = data;
+      dispatch(LOAD_FORM({ components, isLive, formId: _id }));
+      return data;
+    } catch (error) {
+      dispatch(
+        SHOW_SNACKBAR({
+          severity: "error",
+          message: error.data.toString(),
+          autoHideDuration: 2000,
+        })
+      );
     }
   };
 
@@ -28,7 +55,6 @@ const useForm = () => {
     });
     const data = (await response.json()).data;
     const formId = data._id;
-    console.log(data);
     dispatch(CREATE_FORM(formId));
 
     navigate(`/form/${formId}`);
@@ -69,6 +95,6 @@ const useForm = () => {
     );
   };
 
-  return { getForm, createForm, publish, unpublish };
+  return { getForm, previewForm, createForm, publish, unpublish };
 };
 export default useForm;

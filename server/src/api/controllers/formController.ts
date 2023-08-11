@@ -14,6 +14,19 @@ export class FormController {
     this.logger = logger;
     this.formServiceInstance = formService;
   }
+
+  public previewForm = async (req: Request, res: Response, next: NextFunction) => {
+    this.logger.debug('Calling Preview Form endpoint with %o', { params: req.params });
+
+    try {
+      const formId = req.params['formId'];
+      const form = await this.formServiceInstance.previewForm(formId);
+      return res.status(200).json(Result.success(form));
+    } catch (error) {
+      return next(error);
+    }
+  };
+
   public getForm = async (req: Request, res: Response, next: NextFunction) => {
     this.logger.debug('Calling Get Form endpoint with %o', { params: req.params });
 

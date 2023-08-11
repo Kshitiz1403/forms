@@ -9,7 +9,9 @@ export default (app: Router) => {
 
   app.use('/forms', route);
 
-  route.get('/:formId', ctrl.getForm);
+  route.get('/:formId/preview', ctrl.previewForm);
+
+  route.get('/:formId/', ctrl.getForm);
 
   route.post('/', ctrl.createForm);
 

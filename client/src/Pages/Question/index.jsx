@@ -5,15 +5,16 @@ import Categorize from "../../Components/Categorize"
 import { useDispatch, useSelector } from "react-redux"
 import { SWITCH_TYPE, UPDATE_QUESTION } from "../../store/reducers/questionSlice"
 import useQuestion from "../../hooks/useQuestion"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useEffect } from "react"
 import { LOAD_FORM } from "../../store/reducers/formSlice"
+import useQuery from "../../hooks/useQuery"
 
 const Question = () => {
 
     const questionService = useQuestion();
     const navigate = useNavigate();
-    const params = useParams();
+    const query = useQuery();
     const state = useSelector(state => state.question)
     const dispatch = useDispatch();
     const formId = useSelector(state => state.form.formId)
@@ -33,11 +34,11 @@ const Question = () => {
     }
 
     const handleFinishAddingQuestion = () => {
-        navigate(`/form/${formId}`)
+        navigate(`/form?id=${formId}`)
     }
 
     useEffect(() => {
-        const formId = params.id;
+        const formId = query.get('id');
         dispatch(LOAD_FORM({ formId }))
     }, [])
 

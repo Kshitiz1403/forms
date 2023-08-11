@@ -3,16 +3,17 @@ import useForm from '../../hooks/useForm'
 import { useParams } from 'react-router-dom'
 import Respond from '../../Components/Respond'
 import { useDispatch, useSelector } from 'react-redux'
-import { ANSWER_NEXT, ANSWER_PREVIOUS, SAVE_RESPONSE } from '../../store/reducers/respondSlice'
+import { ANSWER_NEXT, ANSWER_PREVIOUS, RESET_RESPOND_STATE, SAVE_RESPONSE } from '../../store/reducers/respondSlice'
 import { ComponentTypes } from '../../enums/ComponentTypes'
 import useRespond from '../../hooks/useRespond'
 import store from '../../store'
+import useQuery from '../../hooks/useQuery'
 
 const Preview = ({ isSubmit }) => {
 
     const formService = useForm();
     const respondService = useRespond();
-    const params = useParams();
+    const query = useQuery();
     const dispatch = useDispatch();
     const components = useSelector(state => state.form.components)
     const answeringIndex = useSelector(state => state.respond.answeringIndex)
@@ -23,7 +24,7 @@ const Preview = ({ isSubmit }) => {
 
     useEffect(() => {
         (async () => {
-            const formId = params.id;
+            const formId = query.get('id')
 
             if (isSubmit) {
                 const form = await formService.getForm(formId)
@@ -31,6 +32,7 @@ const Preview = ({ isSubmit }) => {
                 const form = await formService.previewForm(formId)
             }
         })();
+        dispatch(RESET_RESPOND_STATE())
     }, [])
 
     useEffect(() => {

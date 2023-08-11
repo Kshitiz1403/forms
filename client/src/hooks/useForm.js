@@ -11,7 +11,7 @@ const useForm = () => {
 
   const getForm = async (formId) => {
     try {
-      const response = await fetch(`${config.BASE_URI}/forms/${formId}`);
+      const response = await fetch(`${config.BASE_URI}/forms?id=${formId}`);
       if (!response.ok) throw await response.json();
       const data = (await response.json()).data;
       const { components, isLive, _id } = data;
@@ -31,7 +31,7 @@ const useForm = () => {
   const previewForm = async (formId) => {
     try {
       const response = await fetch(
-        `${config.BASE_URI}/forms/${formId}/preview`
+        `${config.BASE_URI}/forms/preview?id=${formId}`
       );
       if (!response.ok) throw await response.json();
       const data = (await response.json()).data;
@@ -57,11 +57,11 @@ const useForm = () => {
     const formId = data._id;
     dispatch(CREATE_FORM(formId));
 
-    navigate(`/form/${formId}`);
+    navigate(`/form?id=${formId}`);
   };
 
   const publish = async (formId) => {
-    const response = await fetch(`${config.BASE_URI}/forms/publish/${formId}`, {
+    const response = await fetch(`${config.BASE_URI}/forms/publish?id=${formId}`, {
       method: "POST",
     });
     const data = (await response.json()).data;
@@ -78,7 +78,7 @@ const useForm = () => {
 
   const unpublish = async (formId) => {
     const response = await fetch(
-      `${config.BASE_URI}/forms/unpublish/${formId}`,
+      `${config.BASE_URI}/forms/unpublish?id=${formId}`,
       {
         method: "POST",
       }

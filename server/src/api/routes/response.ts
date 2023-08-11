@@ -8,5 +8,5 @@ export default (app: Router) => {
 
   app.use('/respond', route);
 
-  route.post('/:formId', ctrl.createResponse);
+  route.post('/', ctrl.createResponse);
 };

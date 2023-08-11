@@ -16,10 +16,10 @@ export class FormController {
   }
 
   public previewForm = async (req: Request, res: Response, next: NextFunction) => {
-    this.logger.debug('Calling Preview Form endpoint with %o', { params: req.params });
+    this.logger.debug('Calling Preview Form endpoint with %o', { query: req.query });
 
     try {
-      const formId = req.params['formId'];
+      const formId = req.query['id'];
       const form = await this.formServiceInstance.previewForm(formId);
       return res.status(200).json(Result.success(form));
     } catch (error) {
@@ -28,10 +28,10 @@ export class FormController {
   };
 
   public getForm = async (req: Request, res: Response, next: NextFunction) => {
-    this.logger.debug('Calling Get Form endpoint with %o', { params: req.params });
+    this.logger.debug('Calling Get Form endpoint with %o', { query: req.query });
 
     try {
-      const formId = req.params['formId'];
+      const formId = req.query['id'];
       const form = await this.formServiceInstance.getForm(formId);
       return res.status(200).json(Result.success(form));
     } catch (error) {
@@ -50,9 +50,9 @@ export class FormController {
   };
 
   public addQuestion = async (req: Request, res: Response, next: NextFunction) => {
-    this.logger.debug('Calling Add Question endpoint with %o', { body: req.body, params: req.params });
+    this.logger.debug('Calling Add Question endpoint with %o', { body: req.body, query: req.query });
     try {
-      const formId = req.params['formId'];
+      const formId = req.query['id'];
       const type = req.body.type as ComponentTypes;
       const payload = { ...req.body, type: undefined };
       const question = await this.formServiceInstance.addQuestion(formId, type, payload);
@@ -63,9 +63,9 @@ export class FormController {
   };
 
   public publishForm = async (req: Request, res: Response, next: NextFunction) => {
-    this.logger.debug('Calling Publish Form endpoint with %o', { body: req.body, params: req.params });
+    this.logger.debug('Calling Publish Form endpoint with %o', { body: req.body, query: req.query });
     try {
-      const formId = req.params['formId'];
+      const formId = req.query['id'];
 
       const form = await this.formServiceInstance.publishForm(formId);
       return res.status(200).json(Result.success(form));
@@ -75,9 +75,9 @@ export class FormController {
   };
 
   public unpublishForm = async (req: Request, res: Response, next: NextFunction) => {
-    this.logger.debug('Calling Unpublish Form endpoint with %o', { body: req.body, params: req.params });
+    this.logger.debug('Calling Unpublish Form endpoint with %o', { body: req.body, query: req.query });
     try {
-      const formId = req.params['formId'];
+      const formId = req.query['id'];
 
       const form = await this.formServiceInstance.unpublishForm(formId);
       return res.status(200).json(Result.success(form));

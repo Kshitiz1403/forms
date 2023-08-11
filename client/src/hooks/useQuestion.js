@@ -41,7 +41,7 @@ const useQuestion = () => {
     }
 
     const response = await fetch(
-      `${config.BASE_URI}/forms/question/${formId}`,
+      `${config.BASE_URI}/forms/question?id=${formId}`,
       {
         method: "POST",
         headers: {

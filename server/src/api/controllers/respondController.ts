@@ -14,10 +14,10 @@ export class RespondController {
   }
 
   public createResponse = async (req: Request, res: Response, next: NextFunction) => {
-    this.logger.debug('Calling Create Response endpoint with %o', { body: req.body, params: req.params });
+    this.logger.debug('Calling Create Response endpoint with %o', { body: req.body, query: req.query });
 
     try {
-      const formId = req.params['formId'];
+      const formId = req.query['id'];
       const responses = req.body.responses;
       const response = await this.respondService.createResponse(formId, responses);
       return res.status(200).json(Result.success(response));

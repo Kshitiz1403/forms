@@ -10,7 +10,7 @@ const useRespond = () => {
   const dispatch = useDispatch();
 
   const respond = async (responses) => {
-    const request = await fetch(`${config.BASE_URI}/respond/${formId}`, {
+    const request = await fetch(`${config.BASE_URI}/respond?id=${formId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -29,7 +29,7 @@ const useRespond = () => {
     );
     dispatch(RESET_RESPOND_STATE());
     const responseId = data._id
-    navigate(`/report/${responseId}`, { replace: true });
+    navigate(`/report?id=${responseId}`, { replace: true });
     
 
     return data;

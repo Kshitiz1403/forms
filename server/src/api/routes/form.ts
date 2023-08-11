@@ -9,15 +9,15 @@ export default (app: Router) => {
 
   app.use('/forms', route);
 
-  route.get('/:formId/preview', ctrl.previewForm);
+  route.get('/preview/', ctrl.previewForm);
 
-  route.get('/:formId/', ctrl.getForm);
+  route.get('/', ctrl.getForm);
 
   route.post('/', ctrl.createForm);
 
-  route.post('/question/:formId', ctrl.addQuestion);
+  route.post('/question/', ctrl.addQuestion);
 
-  route.post('/publish/:formId', ctrl.publishForm);
+  route.post('/publish/', ctrl.publishForm);
 
-  route.post('/unpublish/:formId', ctrl.unpublishForm);
+  route.post('/unpublish/', ctrl.unpublishForm);
 };

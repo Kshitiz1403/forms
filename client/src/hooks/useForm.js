@@ -14,6 +14,7 @@ const useForm = () => {
     const data = (await response.json()).data;
     const { components, isLive, _id } = data;
     dispatch(LOAD_FORM({ components, isLive, formId: _id }));
+    return data;
   };
 
   const createForm = async () => {
@@ -28,7 +29,7 @@ const useForm = () => {
     navigate(`/form/${formId}`);
   };
 
-  const publish = async () => {
+  const publish = async (formId) => {
     const response = await fetch(`${config.BASE_URI}/forms/publish/${formId}`, {
       method: "POST",
     });

@@ -13,8 +13,8 @@ export const formSlice = createSlice({
     LOAD_FORM: (state, action) => {
       const { components, isLive, formId } = action.payload;
       state.formId = formId;
-      state.components = components;
-      state.isLive = isLive;
+      state.components = components || [];
+      state.isLive = isLive || false;
     },
     CREATE_FORM: (state, action) => {
       const { formId } = action.payload;

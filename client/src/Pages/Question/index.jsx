@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { SWITCH_TYPE, UPDATE_QUESTION } from "../../store/reducers/questionSlice"
 import useQuestion from "../../hooks/useQuestion"
 
-const Question = ({ isViewOnly = false, viewOnlyPayload = {} }) => {
+const Question = () => {
 
     const questionService = useQuestion();
 
@@ -14,6 +14,14 @@ const Question = ({ isViewOnly = false, viewOnlyPayload = {} }) => {
         const value = event.target.value;
 
         dispatch(SWITCH_TYPE(value))
+    }
+
+    const handleQuestionInput = (event) => {
+        dispatch(UPDATE_QUESTION(event.target.value))
+    }
+
+    const handleAddQuestion = () => {
+        questionService.addQuestion()
     }
 
     const state = useSelector(state => state.question)
@@ -33,7 +41,7 @@ const Question = ({ isViewOnly = false, viewOnlyPayload = {} }) => {
                         width: "100%",
                     }}
                 >
-                    {!isViewOnly ? <Select
+                    <Select
                         labelId="Choose Question Type"
                         value={state.questionType}
                         label="Question Type"
@@ -41,22 +49,17 @@ const Question = ({ isViewOnly = false, viewOnlyPayload = {} }) => {
                         onChange={handleChange}
                     >
                         {Object.values(ComponentTypes).map(value => <MenuItem key={value} value={value}>{value}</MenuItem>)}
-
-                    </Select> : null}
+                    </Select>
                 </div>
                 <div style={{ marginTop: 10, marginBottom: 20 }}>
-                    <TextField style={{ width: '100%' }} id="outlined-basic" label="Question" value={isViewOnly ? viewOnlyPayload.question : state.question} onChange={(event) => !isViewOnly && dispatch(UPDATE_QUESTION(event.target.value))} variant="outlined" />
+                    <TextField style={{ width: '100%' }} id="outlined-basic" label="Question" value={state.question} onChange={handleQuestionInput} variant="outlined" />
                 </div>
-                {isViewOnly ?
-                    viewOnlyPayload.questionType == ComponentTypes.MCQ ? <MCQ isViewOnly={isViewOnly} viewOnlyPayload={viewOnlyPayload} /> : viewOnlyPayload.questionType == ComponentTypes.CATEGORIZE ? <Categorize isViewOnly={isViewOnly} viewOnlyPayload={viewOnlyPayload} /> : null
-                    :
-                    state.questionType == ComponentTypes.MCQ ? <MCQ isViewOnly={isViewOnly} /> : state.questionType == ComponentTypes.CATEGORIZE ? <Categorize /> : null
-                }
+                {state.questionType == ComponentTypes.MCQ ? <MCQ /> : state.questionType == ComponentTypes.CATEGORIZE ? <Categorize /> : null}
 
             </div>
-            {!isViewOnly ? <div style={{ justifyContent: 'center', display: 'flex', marginTop: 10 }}>
-                <Button variant="contained" onClick={() => questionService.addQuestion()}>Add Question</Button>
-            </div> : null}
+            <div style={{ justifyContent: 'center', display: 'flex', marginTop: 10 }}>
+                <Button variant="contained" onClick={handleAddQuestion}>Add Question</Button>
+            </div>
         </div>)
 }
 

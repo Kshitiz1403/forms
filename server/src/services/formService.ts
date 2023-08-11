@@ -23,7 +23,7 @@ export class FormService {
           case ComponentTypes.CATEGORIZE: {
             const { categories, question, type, _id, correctAnswers } = component;
             const items = Object.keys(correctAnswers);
-            return { _id, type, categories, question, items };
+            return { _id, type, question, categories, items };
           }
           case ComponentTypes.MCQ: {
             const { question, _id, options, type } = component;

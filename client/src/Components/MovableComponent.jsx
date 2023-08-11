@@ -128,9 +128,8 @@ const Column = ({ children, className, title }) => {
             } else if (!canDrop) {
                 return "rgb(255,188,188)";
             }
-        } else {
-            return "";
         }
+        return "";
     };
 
     return (
@@ -197,7 +196,7 @@ export const MovableComponent = ({ questionId, categories, categoryItems }) => {
     };
 
     return (
-        <div >
+        <>
             <DndProvider backend={HTML5Backend}>
                 <div className="container">
 
@@ -214,6 +213,6 @@ export const MovableComponent = ({ questionId, categories, categoryItems }) => {
                     )}
                 </div>
             </DndProvider>
-        </div>
+        </>
     );
 };

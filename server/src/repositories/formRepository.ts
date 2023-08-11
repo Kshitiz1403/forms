@@ -23,4 +23,8 @@ export class FormRepository {
   public publishForm = async (formId: IForm['_id']) => {
     return FormModel.findOneAndUpdate({ _id: formId }, { isLive: true }, { new: true }).lean();
   };
+
+  public isFormLive = async (formId: IForm['_id']) => {
+    return (await FormModel.findById(formId)).isLive;
+  };
 }

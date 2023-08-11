@@ -150,13 +150,17 @@ const Column = ({ children, className, title }) => {
  * All rights belong to their respective owner.
  * Source - https://codesandbox.io/s/eager-wright-cfzr3g
  */
-export const MovableComponent = ({ tasks, myItems }) => {
+export const MovableComponent = ({ questionId, categories, categoryItems }) => {
     const dispatch = useDispatch();
 
-    const [items, setItems] = useState(tasks);
+    const [items, setItems] = useState(categories);
 
     useEffect(() => {
-        dispatch(SYNC_CATEGORIZE_STATE(items))
+        const mappings = {}
+        items.filter(({ column }) => column != CATEGORIES).map(({ name, column }) => mappings[column] = name);
+        const obj = { type: "CATEGORIZE", questionId, chosenAnswers: mappings }
+
+        dispatch(SYNC_CATEGORIZE_STATE(obj))
     }, [items])
 
     const moveCardHandler = (dragIndex, hoverIndex) => {
@@ -192,10 +196,6 @@ export const MovableComponent = ({ tasks, myItems }) => {
             ));
     };
 
-    const finish = () => {
-        const mappings = items.filter(({ column }) => column != CATEGORIES).map(({ column, name }) => ({ item: column, belongsTo: name }))
-    }
-
     return (
         <div >
             <DndProvider backend={HTML5Backend}>
@@ -207,7 +207,7 @@ export const MovableComponent = ({ tasks, myItems }) => {
                 </div>
 
                 <div className="columns-wrapper" >
-                    {myItems.map(i =>
+                    {categoryItems.map(i =>
                         <Column key={i} title={i} className="base column belongings-column">
                             {returnItemsForColumn(i)}
                         </Column>

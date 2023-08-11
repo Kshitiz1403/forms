@@ -50,11 +50,23 @@ export class FormController {
   };
 
   public publishForm = async (req: Request, res: Response, next: NextFunction) => {
-    this.logger.debug('Calling Add Question endpoint with %o', { body: req.body, params: req.params });
+    this.logger.debug('Calling Publish Form endpoint with %o', { body: req.body, params: req.params });
     try {
       const formId = req.params['formId'];
 
       const form = await this.formServiceInstance.publishForm(formId);
+      return res.status(200).json(Result.success(form));
+    } catch (error) {
+      return next(error);
+    }
+  };
+
+  public unpublishForm = async (req: Request, res: Response, next: NextFunction) => {
+    this.logger.debug('Calling Unpublish Form endpoint with %o', { body: req.body, params: req.params });
+    try {
+      const formId = req.params['formId'];
+
+      const form = await this.formServiceInstance.unpublishForm(formId);
       return res.status(200).json(Result.success(form));
     } catch (error) {
       return next(error);

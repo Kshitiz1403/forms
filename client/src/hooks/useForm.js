@@ -10,11 +10,16 @@ const useForm = () => {
   const formId = useSelector((state) => state.form.formId);
 
   const getForm = async (formId) => {
-    const response = await fetch(`${config.BASE_URI}/forms/${formId}`);
-    const data = (await response.json()).data;
-    const { components, isLive, _id } = data;
-    dispatch(LOAD_FORM({ components, isLive, formId: _id }));
-    return data;
+    try {
+      const response = await fetch(`${config.BASE_URI}/forms/${formId}`);
+      if (!response.ok)throw response
+      const data = (await response.json()).data;
+      const { components, isLive, _id } = data;
+      dispatch(LOAD_FORM({ components, isLive, formId: _id }));
+      return data;
+    } catch (error) {
+
+    }
   };
 
   const createForm = async () => {
@@ -35,7 +40,7 @@ const useForm = () => {
     });
     const data = (await response.json()).data;
     const { _id, components, isLive } = data;
-    dispatch(LOAD_FORM({ formId: _id, components, isLive }));
+    dispatch(LOAD_FORM({ formId: _id, isLive }));
     dispatch(
       SHOW_SNACKBAR({
         severity: "success",
@@ -45,6 +50,25 @@ const useForm = () => {
     );
   };
 
-  return { getForm, createForm, publish };
+  const unpublish = async (formId) => {
+    const response = await fetch(
+      `${config.BASE_URI}/forms/unpublish/${formId}`,
+      {
+        method: "POST",
+      }
+    );
+    const data = (await response.json()).data;
+    const { _id, components, isLive } = data;
+    dispatch(LOAD_FORM({ formId: _id, isLive }));
+    dispatch(
+      SHOW_SNACKBAR({
+        severity: "success",
+        message: "Form Unpublished!",
+        autoHideDuration: 2000,
+      })
+    );
+  };
+
+  return { getForm, createForm, publish, unpublish };
 };
 export default useForm;

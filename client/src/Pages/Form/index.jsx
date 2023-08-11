@@ -21,7 +21,8 @@ const Form = () => {
         <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
             <Button style={{ marginTop: 25 }} variant='contained' onClick={() => navigate(`/form/${formId}/question`)}>Add Question</Button>
             <Button style={{ marginTop: 25 }} variant='contained' color='success' onClick={() => navigate(`/form/${formId}/preview`)}>Preview the Form</Button>
-            <Button style={{ marginTop: 25 }} color='error' variant='contained' onClick={() => formService.publish(formId)}>Publish!</Button>
+            <Button style={{ marginTop: 25 }}  variant='contained' onClick={() => formService.publish(formId)}>Publish!</Button>
+            <Button style={{ marginTop: 25 }} color='error' variant='contained' onClick={() => formService.unpublish(formId)}>Unpublish!</Button>
         </div>
     )
 }

@@ -16,4 +16,6 @@ export default (app: Router) => {
   route.post('/question/:formId', ctrl.addQuestion);
 
   route.post('/publish/:formId', ctrl.publishForm);
+
+  route.post('/unpublish/:formId', ctrl.unpublishForm);
 };

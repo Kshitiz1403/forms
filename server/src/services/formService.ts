@@ -112,4 +112,13 @@ export class FormService {
     form.updatedAt = undefined;
     return form;
   };
+
+  public unpublishForm = async (formId: IForm['_id']) => {
+    const formRecord = await this.formRepositoryInstance.unpublishForm(formId);
+    const form = { ...formRecord };
+    form.createdAt = undefined;
+    form.updatedAt = undefined;
+    return form;
+  };
+
 }

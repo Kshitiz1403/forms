@@ -83,7 +83,7 @@ const Preview = () => {
     }
 
     const CurrentRespondingComponent = () => {
-        if (!components || components.length == 0) return
+        if (!components || components.length == 0) return<></>
         const component = components[answeringIndex]
         const type = component.type
         const questionId = component._id;

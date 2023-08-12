@@ -21,8 +21,8 @@ const QuestionComponent = ({ question, status, questionId, index, expected, type
       <div style={{
         textDecorationLine: isFlipped ? 'line-through' : undefined, textDecorationColor
           : 'red'
-      }}>{!isFlipped ? question : JSON.stringify(got)}</div>
-      {isFlipped ? <div>{JSON.stringify(expected)}</div> : null}
+      }}>{!isFlipped ? question : !status ? JSON.stringify(got) : null}</div>
+      {isFlipped ? status ? <div>{JSON.stringify(got)}</div> : <div>{JSON.stringify(expected)}</div> : null}
     </div>
 
     <div>{!status ? <CloseIcon style={{ color: 'red' }} /> : <CheckIcon style={{ color: 'green' }} />}</div>

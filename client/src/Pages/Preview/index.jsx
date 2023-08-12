@@ -36,14 +36,14 @@ const Preview = ({ isSubmit }) => {
     }, [])
 
     useEffect(() => {
-        if (components && Array.isArray(components) && answeringIndex == components.length - 1) {
+        if (components && Array.isArray(components) && answeringIndex == componentsLength - 1) {
             if (isSubmit) return setNextButton({ text: "Submit", isDisabled: false })
             return setNextButton({ text: "Submit", isDisabled: true })
 
         }
         return setNextButton({ text: "Next", isDisabled: false })
 
-    }, [answeringIndex])
+    }, [answeringIndex, components])
 
 
     const getCurrentComponent = () => {

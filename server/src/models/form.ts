@@ -2,11 +2,6 @@ import { IForm } from '@/interfaces/IForm';
 import mongoose, { Schema } from 'mongoose';
 
 const componentSchema = new Schema({
-  _id: {
-    type: Schema.Types.ObjectId,
-    default: new mongoose.Types.ObjectId(),
-    unique: true,
-  },
   imageURL: {
     type: Schema.Types.String,
   },

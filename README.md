@@ -1,6 +1,6 @@
 The project uses MongoDB, Nodejs and ReactJS with Typescript
 
-Live Link - https://forms.kshitizagrawal.in (The link must be live within sometime)
+Live Link - https://forms.kshitizagrawal.in
 
 Video Demo - 
 https://youtu.be/671XTR_HrOk

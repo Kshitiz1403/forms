@@ -3,6 +3,7 @@ import Question from "../Question"
 import Home from "../Home"
 import Form from "../Form"
 import Preview from "../Preview"
+import Report from "../Report"
 
 const AppRoutes = () => {
     return (
@@ -12,11 +13,8 @@ const AppRoutes = () => {
                 <Route path="/form" element={<Form />} />
                 <Route path="/form/preview" element={<Preview isSubmit={false} />} />
                 <Route path="/form/submit" element={<Preview isSubmit={true} />} />
-                <Route path='/form/question' element={<>
-                    <div style={{ minHeight: '100vh', justifyContent: 'center', display: 'flex', alignItems: 'center' }}>
-                        <Question />
-                    </div>
-                </>} />
+                <Route path='/form/question' element={<Question />} />
+                <Route path="/report" element={<Report />} />
             </Routes>
         </BrowserRouter>
     )

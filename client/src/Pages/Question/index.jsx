@@ -45,41 +45,43 @@ const Question = () => {
 
 
     return (
-        <div style={{ minWidth: '50%', maxidth: '90%' }}>
-            <div style={{
-                height: '100%', borderWidth: 0.1, borderColor: 'rgba(0, 0, 0, 0.125)', borderStyle: 'solid', borderRadius: 10, padding: 20, boxShadow: 10,
-                display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly',
-            }}>
-                <div
-                    style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "center",
-                        width: "100%",
-                    }}
-                >
-                    <Select
-                        labelId="Choose Question Type"
-                        value={state.questionType}
-                        label="Question Type"
-                        defaultValue={state.questionType}
-                        onChange={handleChange}
+        <div style={{ minHeight: '100vh', justifyContent: 'center', display: 'flex', alignItems: 'center' }}>
+            <div style={{ minWidth: '50%', maxidth: '90%' }}>
+                <div style={{
+                    height: '100%', borderWidth: 0.1, borderColor: 'rgba(0, 0, 0, 0.125)', borderStyle: 'solid', borderRadius: 10, padding: 20, boxShadow: 10,
+                    display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly',
+                }}>
+                    <div
+                        style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "center",
+                            width: "100%",
+                        }}
                     >
-                        {Object.values(ComponentTypes).map(value => <MenuItem key={value} value={value}>{value}</MenuItem>)}
-                    </Select>
-                </div>
-                <div style={{ marginTop: 10, marginBottom: 20 }}>
-                    <TextField style={{ width: '100%' }} id="outlined-basic" label="Question" value={state.question} onChange={handleQuestionInput} variant="outlined" />
-                </div>
-                {state.questionType == ComponentTypes.MCQ ? <MCQ /> : state.questionType == ComponentTypes.CATEGORIZE ? <Categorize /> : null}
+                        <Select
+                            labelId="Choose Question Type"
+                            value={state.questionType}
+                            label="Question Type"
+                            defaultValue={state.questionType}
+                            onChange={handleChange}
+                        >
+                            {Object.values(ComponentTypes).map(value => <MenuItem key={value} value={value}>{value}</MenuItem>)}
+                        </Select>
+                    </div>
+                    <div style={{ marginTop: 10, marginBottom: 20 }}>
+                        <TextField style={{ width: '100%' }} id="outlined-basic" label="Question" value={state.question} onChange={handleQuestionInput} variant="outlined" />
+                    </div>
+                    {state.questionType == ComponentTypes.MCQ ? <MCQ /> : state.questionType == ComponentTypes.CATEGORIZE ? <Categorize /> : null}
 
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                <div style={{ justifyContent: 'center', display: 'flex', marginTop: 10 }}>
-                    <Button variant="contained" onClick={handleAddQuestion}>Add Question</Button>
                 </div>
-                <div style={{ justifyContent: 'center', display: 'flex', marginTop: 10 }}>
-                    <Button variant="contained" onClick={handleFinishAddingQuestion}>Finish adding question</Button>
+                <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+                    <div style={{ justifyContent: 'center', display: 'flex', marginTop: 10 }}>
+                        <Button variant="contained" onClick={handleAddQuestion}>Add Question</Button>
+                    </div>
+                    <div style={{ justifyContent: 'center', display: 'flex', marginTop: 10 }}>
+                        <Button variant="contained" onClick={handleFinishAddingQuestion}>Finish adding question</Button>
+                    </div>
                 </div>
             </div>
 

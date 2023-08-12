@@ -1,8 +1,8 @@
-import { ObjectId } from 'mongoose';
+import { Types } from 'mongoose';
 import { Component } from './Components';
 
 export type IComponent = {
-  _id: ObjectId;
+  _id: Types.ObjectId;
   imageURL?: string;
   question: string;
   type: Component;

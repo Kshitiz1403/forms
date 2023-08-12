@@ -10,6 +10,7 @@ services:
       - //var/run/docker.sock:/var/run/docker.sock
     ports:
       - 3000:3000
+    restart: always
   mongo:
     image: mongo:latest
     volumes:
@@ -19,5 +20,6 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: rootpassword
     ports:
       - 27017:27017
+    restart: always
 volumes:
   mongodb_data_cont:

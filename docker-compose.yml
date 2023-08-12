@@ -1,18 +1,17 @@
 version: '3.7'
 services:
-  # server:
-  #   build: .
-  #   depends_on:
-  #     mongo:
-  #       condition: service_started
-  #   command: ["yarn", "start"]
-  #   volumes:
-  #     - //var/run/docker.sock:/var/run/docker.sock
-  #   ports:
-  #     - 3000:3000
+  server:
+    build: .
+    depends_on:
+      mongo:
+        condition: service_started
+    command: ["yarn", "start"]
+    volumes:
+      - //var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 3000:3000
   mongo:
     image: mongo:latest
-    container_name: mongoDB
     volumes:
       - mongodb_data_cont:/data/db
     environment:

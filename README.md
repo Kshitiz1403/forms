@@ -1,5 +1,8 @@
 The project uses MongoDB, Nodejs and ReactJS with Typescript
 
+Video Demo - 
+https://youtu.be/671XTR_HrOk
+
 Run 
 ```
 docker compose up
